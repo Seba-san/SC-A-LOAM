@@ -3,9 +3,11 @@ project(aloam_velodyne)
 
 set(CMAKE_BUILD_TYPE "Release")
 # set(CMAKE_CXX_FLAGS "-std=c++11")
-set(CMAKE_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
+
+find_package(Boost REQUIRED COMPONENTS timer)
+include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
@@ -45,13 +47,13 @@ catkin_package(
 
 
 add_executable(ascanRegistration src/scanRegistration.cpp)
-target_link_libraries(ascanRegistration ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(ascanRegistration ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(alaserOdometry src/laserOdometry.cpp)
-target_link_libraries(alaserOdometry ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+target_link_libraries(alaserOdometry ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(alaserMapping src/laserMapping.cpp)
-target_link_libraries(alaserMapping ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+target_link_libraries(alaserMapping ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(alaserPGO 
   src/laserPosegraphOptimization.cpp
@@ -61,7 +63,7 @@ target_compile_options(alaserPGO
   PRIVATE ${OpenMP_CXX_FLAGS}
 )
 target_link_libraries(alaserPGO 
-  ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES}
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES} ${Boost_LIBRARIES}
   ${OpenMP_CXX_FLAGS}
   gtsam
 )
