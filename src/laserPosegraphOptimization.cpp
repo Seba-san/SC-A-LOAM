@@ -380,22 +380,30 @@ void pubPath(void)
         odomAftPGOthis.pose.pose.position.y = pose_est.y;
         odomAftPGOthis.pose.pose.position.z = pose_est.z;
         odomAftPGOthis.pose.pose.orientation = tf::createQuaternionMsgFromRollPitchYaw(pose_est.roll, pose_est.pitch, pose_est.yaw);
-        odomAftPGOthis.pose.covariance[0] = covPose(0, 0); // Added by Seba-san
-        odomAftPGOthis.pose.covariance[1] = covPose(0, 1); // Added by Seba-san
-        odomAftPGOthis.pose.covariance[2] = covPose(0, 2); // Added by Seba-san
-        
-        odomAftPGOthis.pose.covariance[6] = covPose(1, 0); // Added by Seba-san
-        odomAftPGOthis.pose.covariance[7] = covPose(1, 1);  // Added by Seba-san
-        odomAftPGOthis.pose.covariance[8] = covPose(1, 2); // Added by Seba-san
+        // tx, ty, tz, roll, pitch, yaw
+        // Fill the pose.covariance field with the values of covPose
+        for(int i = 0; i < 6; i++) {
+            for(int j = 0; j < 6; j++) {
+                odomAftPGOthis.pose.covariance[i*6 + j] = covPose(i, j);
+            }
+        }
 
-        odomAftPGOthis.pose.covariance[12] = covPose(2, 0); // Added by Seba-san
-        odomAftPGOthis.pose.covariance[13] = covPose(2, 1); // Added by Seba-san
-        odomAftPGOthis.pose.covariance[14] = covPose(2, 2);// Added by Seba-san
-
-
-        odomAftPGOthis.pose.covariance[21] = covPose(3, 3);// Added by Seba-san
-        odomAftPGOthis.pose.covariance[28] = covPose(4, 4);// Added by Seba-san
-        odomAftPGOthis.pose.covariance[35] = covPose(5, 5);// Added by Seba-san
+        // odomAftPGOthis.pose.covariance[0] = covPose(0, 0); // Added by Seba-san 
+        // odomAftPGOthis.pose.covariance[1] = covPose(0, 1); // Added by Seba-san
+        // odomAftPGOthis.pose.covariance[2] = covPose(0, 2); // Added by Seba-san
+        // 
+        // odomAftPGOthis.pose.covariance[6] = covPose(1, 0); // Added by Seba-san
+        // odomAftPGOthis.pose.covariance[7] = covPose(1, 1);  // Added by Seba-san
+        // odomAftPGOthis.pose.covariance[8] = covPose(1, 2); // Added by Seba-san
+// 
+        // odomAftPGOthis.pose.covariance[12] = covPose(2, 0); // Added by Seba-san
+        // odomAftPGOthis.pose.covariance[13] = covPose(2, 1); // Added by Seba-san
+        // odomAftPGOthis.pose.covariance[14] = covPose(2, 2);// Added by Seba-san
+// 
+// 
+        // odomAftPGOthis.pose.covariance[21] = covPose(3, 3);// Added by Seba-san
+        // odomAftPGOthis.pose.covariance[28] = covPose(4, 4);// Added by Seba-san
+        // odomAftPGOthis.pose.covariance[35] = covPose(5, 5);// Added by Seba-san
 
         odomAftPGO = odomAftPGOthis;
 
