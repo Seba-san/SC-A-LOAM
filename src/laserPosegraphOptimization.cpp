@@ -462,8 +462,14 @@ void runISAM2opt(void)
     // Calculate and print the covariance of the last pose
 
     if (keyframePoses.size() > 0){
-    covPose = isam->marginalCovariance(keyframePoses.size() - 1);
-    //std::cout << "Covariance of the last pose:\n"   << covPose << std::endl;
+   try {
+            covPose = isam->marginalCovariance(keyframePoses.size() - 1);
+            //std::cout << "Covariance of the last pose:\n"   << covPose << std::endl;
+        } catch (const std::exception& e) {
+            // Handle the error or log it
+            std::cerr << "Exception caught while calculating marginal covariance: " << e.what() << std::endl;
+            // Optionally, handle the error, such as by using a default value or skipping the operation.
+        }
     }
     // Added by Seba-san
 
