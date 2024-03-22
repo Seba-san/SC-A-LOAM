@@ -373,8 +373,8 @@ void pubPath(void)
         // const gtsam::Pose3& pose_est = isamCurrentEstimate.at<gtsam::Pose3>(node_idx);
 
         nav_msgs::Odometry odomAftPGOthis;
-        odomAftPGOthis.header.frame_id = "/camera_init";
-        odomAftPGOthis.child_frame_id = "/aft_pgo";
+        odomAftPGOthis.header.frame_id = "camera_init";
+        odomAftPGOthis.child_frame_id = "aft_pgo";
         odomAftPGOthis.header.stamp = ros::Time().fromSec(keyframeTimes.at(node_idx));
         odomAftPGOthis.pose.pose.position.x = pose_est.x;
         odomAftPGOthis.pose.pose.position.y = pose_est.y;
